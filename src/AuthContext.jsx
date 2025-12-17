@@ -3,29 +3,13 @@ import {
   useContext,
   useState,
   useEffect,
-  ReactNode,
 } from "react";
-import { User } from "./types";
 import { api } from "./api";
 
-interface AuthContextType {
-  user: User | null;
-  loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  signup: (data: {
-    firstName: string;
-    lastName: string;
-    emailId: string;
-    password: string;
-  }) => Promise<void>;
-  logout: () => Promise<void>;
-  refreshUser: () => Promise<void>;
-}
+const AuthContext = createContext(null);
 
-const AuthContext = createContext<AuthContextType | null>(null);
-
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -43,17 +27,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const login = async (emailId: string, password: string) => {
+  const login = async (emailId, password) => {
     await api.login(emailId, password);
     await refreshUser();
   };
 
-  const signup = async (data: {
-    firstName: string;
-    lastName: string;
-    emailId: string;
-    password: string;
-  }) => {
+  const signup = async (data) => {
     await api.signup(data);
     await refreshUser();
   };

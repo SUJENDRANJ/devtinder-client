@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { X, Heart } from "lucide-react";
-import { User } from "../types";
 import { api } from "../api";
 
 export default function Feed() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,7 +21,7 @@ export default function Feed() {
     }
   };
 
-  const handleSwipe = async (userId: string, interested: boolean) => {
+  const handleSwipe = async (userId, interested) => {
     if (interested) {
       try {
         await api.sendInterest(userId);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../AuthContext';
 
-export default function Signup({ onToggle }: { onToggle: () => void }) {
+export default function Signup({ onToggle }) {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -11,7 +11,7 @@ export default function Signup({ onToggle }: { onToggle: () => void }) {
   const [error, setError] = useState('');
   const { signup } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {

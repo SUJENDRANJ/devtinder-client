@@ -1,7 +1,7 @@
 const API_BASE = 'https://devtinder-server-v33b.onrender.com';
 
 export const api = {
-  async signup(data: { firstName: string; lastName: string; emailId: string; password: string }) {
+  async signup(data) {
     const res = await fetch(`${API_BASE}/auth/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -12,7 +12,7 @@ export const api = {
     return res.json();
   },
 
-  async login(emailId: string, password: string) {
+  async login(emailId, password) {
     const res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -40,7 +40,7 @@ export const api = {
     return res.json();
   },
 
-  async updateProfile(data: Record<string, unknown>) {
+  async updateProfile(data) {
     const res = await fetch(`${API_BASE}/profile/edit`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -59,7 +59,7 @@ export const api = {
     return res.json();
   },
 
-  async sendInterest(userId: string) {
+  async sendInterest(userId) {
     const res = await fetch(`${API_BASE}/request/send/interested/${userId}`, {
       method: 'POST',
       credentials: 'include',
@@ -68,7 +68,7 @@ export const api = {
     return res.json();
   },
 
-  async reviewRequest(status: 'accepted' | 'rejected', requestId: string) {
+  async reviewRequest(status, requestId) {
     const res = await fetch(`${API_BASE}/request/review/${status}/${requestId}`, {
       method: 'POST',
       credentials: 'include',

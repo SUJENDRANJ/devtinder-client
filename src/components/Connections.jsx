@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { User } from "../types";
 import { api } from "../api";
 
 export default function Connections() {
-  const [connections, setConnections] = useState<User[]>([]);
+  const [connections, setConnections] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

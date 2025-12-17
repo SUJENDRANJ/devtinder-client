@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { Check, X } from "lucide-react";
-import { ConnectionRequest } from "../types";
 import { api } from "../api";
 
 export default function Requests() {
-  const [requests, setRequests] = useState<ConnectionRequest[]>([]);
+  const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,10 +21,7 @@ export default function Requests() {
     }
   };
 
-  const handleReview = async (
-    requestId: string,
-    status: "accepted" | "rejected"
-  ) => {
+  const handleReview = async (requestId, status) => {
     try {
       await api.reviewRequest(status, requestId);
       setRequests((prev) => prev.filter((r) => r._id !== requestId));
