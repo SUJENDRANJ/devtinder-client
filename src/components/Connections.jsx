@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { api } from "../api";
+import Chat from "../components/Chat";
 
 export default function Connections() {
   const [connections, setConnections] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [currentPage, setCurrentPage] = useState("");
 
   useEffect(() => {
     loadConnections();
@@ -20,8 +23,16 @@ export default function Connections() {
     }
   };
 
+  function handleChat() {
+    setCurrentPage("chat");
+  }
+
   if (loading) {
     return <div className="p-4">Loading...</div>;
+  }
+
+  if (currentPage == "chat") {
+    return <Chat />;
   }
 
   return (
@@ -34,37 +45,46 @@ export default function Connections() {
           {connections.map((conn) => (
             <div
               key={conn._id}
-              className="bg-white rounded-lg shadow p-4 flex items-center gap-4"
+              className="bg-white rounded-lg shadow p-4 flex items-center gap-4 justify-around"
             >
-              {conn.photoUrl && (
-                <img
-                  src={
-                    conn.photoUrl == "https://suje.netlify.app/suje.png"
-                      ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm0gw1Qon8aQmHbrqQD4Z1-LKICaMGlp1HXA&s"
-                      : conn.photoUrl
-                  }
-                  alt={conn.firstName}
-                  className="w-16 h-16 rounded-full"
-                />
-              )}
-              <div>
-                <h3 className="font-bold">
-                  {conn.firstName} {conn.lastName}
-                </h3>
-                <p className="text-sm text-gray-600">{conn.about}</p>
-                {conn.skills && conn.skills.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {conn.skills.map((skill, i) => (
-                      <span
-                        key={i}
-                        className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
+              <div className="flex">
+                {conn.photoUrl && (
+                  <img
+                    src={
+                      conn.photoUrl == "https://suje.netlify.app/suje.png"
+                        ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm0gw1Qon8aQmHbrqQD4Z1-LKICaMGlp1HXA&s"
+                        : conn.photoUrl
+                    }
+                    alt={conn.firstName}
+                    className="w-16 h-16 rounded-full"
+                  />
                 )}
+                <div>
+                  <h3 className="font-bold">
+                    {conn.firstName} {conn.lastName}
+                  </h3>
+                  <p className="text-sm text-gray-600">{conn.about}</p>
+                  {conn.skills && conn.skills.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {conn.skills.map((skill, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
+              {/** chat btn */}
+              <button
+                className="w-20 h-10 bg-gray-900 rounded-sm text-white"
+                onClick={handleChat}
+              >
+                Chat
+              </button>
             </div>
           ))}
         </div>
